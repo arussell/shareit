@@ -1,5 +1,7 @@
-README
-======
+shareit
+=======
+
+Simple FTP-based file sharing from the command line
 
 Intro
 -----
