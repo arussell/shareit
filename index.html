@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="shareit : Simple FTP-based file sharing from the command line" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>shareit</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/arussell/shareit">View on GitHub</a>
+
+          <h1 id="project_title">shareit</h1>
+          <h2 id="project_tagline">Simple FTP-based file sharing from the command line</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/arussell/shareit/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/arussell/shareit/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>Intro</h2>
+
+<p>File sharing websites tend to have ads everywhere, and long running HTTP uploads of large files can be a pain in the backside, so I stopped using them a while back. Whenever I needed to share a file with someone, I'd figure out the file's MD5 sum (to avoid naming collisions), fire up <a href="http://panic.com/transmit">Transmit</a> (the nicest Mac FTP app by far), upload the file, rename it after uploading, then manually type the link and copy/paste the MD5'd filename in and send it to whoever I wanted to share the file with.</p>
+
+<p>It was nice because I hosted the files, and didn't have to worry about my recipient seeing a bunch of ads or the file sharing service going down (or being taken down). But it had a huge downside in that it wasn't straightforward. I was doing a whole bunch of the work by hand every time I wanted to share a file with someone, which as a coder seems like I'm doing something wrong. Eventually I got round to automating it, and now it's much easier to share a file with someone quickly, just fire one line into the terminal and you're done.</p>
+
+<h2>Getting Started</h2>
+
+<p>Before you get started, you'll want to create a simple YAML file called <code>.shareit</code> in your home directory with your FTP config details, like this:</p>
+
+<pre><code>hostname: ftp.yourwebsite.tld
+username: yourusernamegoeshere
+password: yourpasswordgoeshere
+path: public_html/shareit/
+http_prefix: http://yourwebsite.tld/shareit/
+</code></pre>
+
+<p><code>path</code> should exist on the FTP server, and <code>http_prefix</code> should be the URL that the folder is accessible at. Both <code>path</code> and <code>http_prefix</code> should also include the trailing slash.</p>
+
+<p>Note that the URLs shareit generates are not secure, but they are random enough that people won't be able to guess them easily unless they know the file's exact contents. It is recommended that you disable your webserver's automatic directory indexing for the folder you define in <code>http_prefix</code> -- if you don't, people will be able to browse your entire collection of shared files.</p>
+
+<p>Once you've set up your config file, make <code>shareit</code> available in your PATH by adding a symlink in <code>/usr/bin</code> or <code>/usr/local/bin</code> or something.</p>
+
+<h2>Usage</h2>
+
+<p>Using shareit is simple, all you need to do is tell it what file to upload:</p>
+
+<pre><code>$ shareit 10mb.txt
+Uploading to http://yourwebsite.tld/shareit/596c35b949baf46b721744a13f76a258.txt: 10000K of 10000K (100%)
+Upload complete!
+</code></pre>
+
+<h2>License</h2>
+
+<p>Copyright (c) 2012 Aaron B. Russell &lt;<a href="mailto:aaron@unadopted.co.uk">aaron@unadopted.co.uk</a>&gt;<br>
+All rights reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
+
+<ul>
+<li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
+<li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
+<li>Neither the name of Aaron B. Russell nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
+</ul><p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL AARON B. RUSSELL BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">shareit maintained by <a href="https://github.com/arussell">arussell</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
