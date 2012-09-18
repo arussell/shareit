@@ -1,0 +1,31 @@
+#!/usr/bin/ruby
+
+require "net/ftp"
+require "digest/md5"
+require "yaml"
+
+# Ensure STDOUT is synced so we can draw progress nicely
+$stdout.sync = true
+
+# Load in configuration
+print "Loading config..."
+config = YAML.load(File.open("#{ENV["HOME"]}/.shareit"))
+
+# Calculate MD5 sum so we can get a consistent filename for this data (but preserve file extension)
+print "\rCalculating MD5 sum of #{ARGV[0]}..."
+filename_md5 = Digest::MD5.hexdigest(File.read(ARGV[0])) << File.extname(ARGV[0])
+filesize = File.size(ARGV[0])
+
+Net::FTP.open(config["hostname"]) do |ftp|
+  ftp.passive = true
+  ftp.login(config["username"],config["password"])
+  files = ftp.chdir(config["path"])
+  transferred = 0
+  ftp.putbinaryfile(ARGV[0],filename_md5) do |data|
+    # Check how much data we have transferred and compare it to file size
+    transferred += data.size
+    percent_finished = ((transferred).to_f/filesize.to_f)*100
+    print "\rUploading to #{config["http_prefix"]}#{filename_md5}: #{transferred/1024}K of #{filesize/1024}K (#{percent_finished.round}%)"
+  end
+  print "\nUpload complete!\n"
+end
